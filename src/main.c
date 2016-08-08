@@ -1,6 +1,9 @@
 #include<stdio.h>
+#include "roman.h"
 
-int main(int argc, char* argv[]) {
-    printf("hello world!\n");
+int main(char* argv[]) {
+    char* result = roman_get_output(argv);
+    printf("%s \n", result);
 }
+
 
