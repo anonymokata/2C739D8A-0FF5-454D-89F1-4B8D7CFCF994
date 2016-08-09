@@ -47,6 +47,12 @@ START_TEST(MDCLXVI_is_converted_to_1666) {
 }
 END_TEST
 
+START_TEST(IV_is_converted_to_4) {
+    ck_assert_int_eq(4, roman_to_int("IV"));
+}
+END_TEST
+
+
 TCase* create_roman_to_int_tests() {
     TCase* tests = tcase_create("Roman-To-Int-Tests");
     tcase_add_test(tests, I_is_converted_to_1);
@@ -58,6 +64,7 @@ TCase* create_roman_to_int_tests() {
     tcase_add_test(tests, D_is_converted_to_500);
     tcase_add_test(tests, M_is_converted_to_1000);
     tcase_add_test(tests, MDCLXVI_is_converted_to_1666);
+    tcase_add_test(tests, IV_is_converted_to_4);
 
     return tests;
 }

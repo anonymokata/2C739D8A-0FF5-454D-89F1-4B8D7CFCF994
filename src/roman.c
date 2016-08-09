@@ -5,29 +5,35 @@
 
 typedef struct {
     int int_value;
-    char roman_value;
+    char* roman_value;
 } RomanToInt;
 
 static const RomanToInt ROMAN_NUMERAL_VALUES[] = {
-    {1000, 'M'},
-    {500, 'D'},
-    {100, 'C'},
-    {50, 'L'},
-    {10, 'X'},
-    {5, 'V'},
-    {1, 'I'}
+    {1000, "M"},
+    {500, "D"},
+    {100, "C"},
+    {50, "L"},
+    {10, "X"},
+    {5, "V"},
+    {4, "IV"},
+    {1, "I"}
 };
 
-static int get_int_value(char roman_char) {
+static bool starts_with(char* string, char* prefix) {
+    int prefix_length = strlen(prefix);
+    return strncmp(string, prefix, prefix_length) == 0;
+}
+
+static const RomanToInt* find_next_mapping(char* roman_string) {
     int num_value_elements = sizeof(ROMAN_NUMERAL_VALUES) / sizeof(ROMAN_NUMERAL_VALUES[0]);
 
     for (int i = 0; i < num_value_elements; i++) {
-        char roman_value = ROMAN_NUMERAL_VALUES[i].roman_value;
-        if (roman_value == roman_char) {
-            return ROMAN_NUMERAL_VALUES[i].int_value;
+        char* roman_value = ROMAN_NUMERAL_VALUES[i].roman_value;
+        if (starts_with(roman_string, roman_value)) {
+            return &ROMAN_NUMERAL_VALUES[i];
         }
     }
-    return 0;
+    return NULL;
 }
 
 char* roman_get_output(char* argv[]) {
@@ -36,14 +42,13 @@ char* roman_get_output(char* argv[]) {
     return roman_from_int(left + right);
 }
 
-int roman_to_int(char* roman) {
+int roman_to_int(char* roman_input) {
     int arabic_value = 0;
-    int num_value_elements = sizeof(ROMAN_NUMERAL_VALUES) / sizeof(ROMAN_NUMERAL_VALUES[0]);
 
-    int input_length = strlen(roman);
-    for (int i = 0; i < input_length; i++) {
-        char roman_char = roman[i];
-        arabic_value += get_int_value(roman_char);
+    while (*roman_input != '\0') {
+        const RomanToInt* value = find_next_mapping(roman_input);
+        arabic_value += value->int_value;
+        roman_input += strlen(value->roman_value);
     }
 
     return arabic_value;
