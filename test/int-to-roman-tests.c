@@ -86,6 +86,34 @@ START_TEST(arabic_291_is_converted_to_CCXCI) {
 }
 END_TEST
 
+START_TEST(arabic_400_is_converted_to_CD) {
+    char* result = roman_from_int(400);
+    ck_assert_str_eq("CD", result);
+    free(result);
+}
+END_TEST
+
+START_TEST(arabic_404_is_converted_to_CDIV) {
+    char* result = roman_from_int(404);
+    ck_assert_str_eq("CDIV", result);
+    free(result);
+}
+END_TEST
+
+START_TEST(arabic_500_is_converted_to_D) {
+    char* result = roman_from_int(500);
+    ck_assert_str_eq("D", result);
+    free(result);
+}
+END_TEST
+
+START_TEST(arabic_555_is_converted_to_DLV) {
+    char* result = roman_from_int(555);
+    ck_assert_str_eq("DLV", result);
+    free(result);
+}
+END_TEST
+
 TCase* create_int_to_roman_tests() {
     TCase* tests = tcase_create("Int-To-Roman-Tests");
 
@@ -101,6 +129,10 @@ TCase* create_int_to_roman_tests() {
     tcase_add_test(tests, arabic_90_is_converted_to_XC);
     tcase_add_test(tests, arabic_100_is_converted_to_C);
     tcase_add_test(tests, arabic_291_is_converted_to_CCXCI);
+    tcase_add_test(tests, arabic_400_is_converted_to_CD);
+    tcase_add_test(tests, arabic_404_is_converted_to_CDIV);
+    tcase_add_test(tests, arabic_500_is_converted_to_D);
+    tcase_add_test(tests, arabic_555_is_converted_to_DLV);
 
     return tests;
 }
