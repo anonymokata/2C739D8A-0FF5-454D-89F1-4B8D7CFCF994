@@ -1,33 +1,26 @@
-
 CC = gcc
+CFLAGS = -Wall -g -std=c99
 
-.PHONY: build check clean
+MAIN_OBJECTS := $(patsubst src/%.c,src/%.o,$(wildcard src/*.c))
+TEST_OBJECTS := $(patsubst test/%.c,test/%.o,$(wildcard test/*.c))
 
-check: build suite.o roman-to-int-tests.o
-	${CC} -o check-roman roman-to-int-tests.o suite.o roman.o -pthread -lrt -lcheck_pic -lm /usr/lib/x86_64-linux-gnu/libcheck.a -pthread -lrt -lm /usr/lib/x86_64-linux-gnu/libcheck_pic.a
-	./check-roman
+TARGET = out
 
-build: main.o
-	${CC} roman.o main.o -o roman-calculator
+.PHONY: check compile test-compile create-target-dir clean
 
-main.o: roman.o src/main.c
-	${CC} -I src -c src/main.c
+check: test-compile
+	$(TARGET)/check-roman
 
-roman.o: src/roman.c src/roman.h
-	${CC} -I src -c src/roman.c
+compile: $(MAIN_OBJECTS) create-target-dir
+	${CC} ${CFLAGS} -o $(TARGET)/roman-calculator $(MAIN_OBJECTS)
 
+test-compile: compile $(TEST_OBJECTS) create-target-dir
+	${CC} ${CFLAGS} -o $(TARGET)/check-roman $(filter-out src/main.o, $(MAIN_OBJECTS)) $(TEST_OBJECTS) `pkg-config --cflags --libs check`
 
-suite.o: test/suite.c roman.o roman-to-int-tests.o
-	${CC} -c test/suite.c 
-
-roman-to-int-tests.o: test/roman-to-int-tests.c test/roman-to-int-tests.h
-	${CC} -c test/roman-to-int-tests.c
-
-int-to-roman-tests.o: test/int-to-roman-tests.c test/int-to-roman-tests.h
-	${CC} -c test/int-to-roman-tests.c
+create-target-dir:
+	@mkdir -p $(TARGET)
 
 clean:
-	rm -rf *.o
-	rm roman-calculator
-	rm check-roman
+	@rm -rf $(TARGET)
+	@rm -rf src/*.o test/*.o
 
