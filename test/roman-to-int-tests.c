@@ -57,6 +57,11 @@ START_TEST(IX_is_converted_to_9) {
 }
 END_TEST
 
+START_TEST(XC_is_converted_to_90) {
+    ck_assert_int_eq(90, roman_to_int("XC"));
+}
+END_TEST
+
 
 TCase* create_roman_to_int_tests() {
     TCase* tests = tcase_create("Roman-To-Int-Tests");
@@ -71,6 +76,7 @@ TCase* create_roman_to_int_tests() {
     tcase_add_test(tests, MDCLXVI_is_converted_to_1666);
     tcase_add_test(tests, IV_is_converted_to_4);
     tcase_add_test(tests, IX_is_converted_to_9);
+    tcase_add_test(tests, XC_is_converted_to_90);
 
     return tests;
 }
