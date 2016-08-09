@@ -1,6 +1,29 @@
 #include<string.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #include "roman.h"
+
+typedef struct {
+    int int_value;
+    char roman_value;
+} RomanToInt;
+
+static const RomanToInt ROMAN_NUMERAL_VALUES[] = {
+    {5, 'V'},
+    {1, 'I'}
+};
+
+static int get_int_value(char roman_char) {
+    int num_value_elements = sizeof(ROMAN_NUMERAL_VALUES) / sizeof(ROMAN_NUMERAL_VALUES[0]);
+
+    for (int i = 0; i < num_value_elements; i++) {
+        char roman_value = ROMAN_NUMERAL_VALUES[i].roman_value;
+        if (roman_value == roman_char) {
+            return ROMAN_NUMERAL_VALUES[i].int_value;
+        }
+    }
+    return 0;
+}
 
 char* roman_get_output(char* argv[]) {
     int left = roman_to_int(argv[0]);
@@ -9,7 +32,16 @@ char* roman_get_output(char* argv[]) {
 }
 
 int roman_to_int(char* roman) {
-    return strlen(roman);
+    int arabic_value = 0;
+    int num_value_elements = sizeof(ROMAN_NUMERAL_VALUES) / sizeof(ROMAN_NUMERAL_VALUES[0]);
+
+    int input_length = strlen(roman);
+    for (int i = 0; i < input_length; i++) {
+        char roman_char = roman[i];
+        arabic_value += get_int_value(roman_char);
+    }
+
+    return arabic_value;
 }
 
 char* roman_from_int(int arabic) {
@@ -21,4 +53,5 @@ char* roman_from_int(int arabic) {
 
     return buffer;
 }
+
 
