@@ -72,6 +72,11 @@ static void push_string(char* buffer, char* to_append) {
 char* roman_from_int(int arabic) {
     char* buffer = malloc(sizeof(char) * ROMAN_MAX_LENGTH);
 
+    if (arabic >= 50) {
+        arabic -= 50;
+        push_string(buffer, "L");
+    }
+
     while (arabic >= 10) {
         arabic -= 10;
         push_string(buffer, "X");
