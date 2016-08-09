@@ -1,7 +1,11 @@
 #include<string.h>
+#include<stdlib.h>
+#include "roman.h"
 
 char* roman_get_output(char* argv[]) {
-    return "II";
+    int left = roman_to_int(argv[0]);
+    int right = roman_to_int(argv[2]);
+    return roman_from_int(left + right);
 }
 
 int roman_to_int(char* roman) {
@@ -9,6 +13,12 @@ int roman_to_int(char* roman) {
 }
 
 char* roman_from_int(int arabic) {
-    return "II";
+    char* buffer = malloc(sizeof(char) * ROMAN_MAX_LENGTH);
+
+    for (int i = 0; i < arabic; i++) {
+        buffer[i] = 'I';
+    }
+
+    return buffer;
 }
 
