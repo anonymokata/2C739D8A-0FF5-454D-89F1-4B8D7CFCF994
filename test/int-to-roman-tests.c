@@ -65,6 +65,26 @@ START_TEST(arabic_66_is_converted_to_LXVI) {
 }
 END_TEST
 
+START_TEST(arabic_90_is_converted_to_XC) {
+    char* result = roman_from_int(90);
+    ck_assert_str_eq("XC", result);
+    free(result);
+}
+END_TEST
+
+START_TEST(arabic_100_is_converted_to_C) {
+    char* result = roman_from_int(100);
+    ck_assert_str_eq("C", result);
+    free(result);
+}
+END_TEST
+
+START_TEST(arabic_291_is_converted_to_CCXCI) {
+    char* result = roman_from_int(291);
+    ck_assert_str_eq("CCXCI", result);
+    free(result);
+}
+END_TEST
 
 TCase* create_int_to_roman_tests() {
     TCase* tests = tcase_create("Int-To-Roman-Tests");
@@ -78,6 +98,9 @@ TCase* create_int_to_roman_tests() {
     tcase_add_test(tests, arabic_25_is_converted_to_XXV);
     tcase_add_test(tests, arabic_50_is_converted_to_L);
     tcase_add_test(tests, arabic_66_is_converted_to_LXVI);
+    tcase_add_test(tests, arabic_90_is_converted_to_XC);
+    tcase_add_test(tests, arabic_100_is_converted_to_C);
+    tcase_add_test(tests, arabic_291_is_converted_to_CCXCI);
 
     return tests;
 }
