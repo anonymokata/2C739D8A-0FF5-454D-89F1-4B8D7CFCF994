@@ -30,6 +30,27 @@ START_TEST(arabic_4_is_converted_to_IV) {
 }
 END_TEST
 
+START_TEST(arabic_5_is_converted_to_V) {
+    char* result = roman_from_int(5);
+    ck_assert_str_eq("V", result);
+    free(result);
+}
+END_TEST
+
+START_TEST(arabic_10_is_converted_to_X) {
+    char* result = roman_from_int(10);
+    ck_assert_str_eq("X", result);
+    free(result);
+}
+END_TEST
+
+START_TEST(arabic_25_is_converted_to_XXV) {
+    char* result = roman_from_int(25);
+    ck_assert_str_eq("XXV", result);
+    free(result);
+}
+END_TEST
+
 TCase* create_int_to_roman_tests() {
     TCase* tests = tcase_create("Int-To-Roman-Tests");
 
@@ -37,6 +58,9 @@ TCase* create_int_to_roman_tests() {
     tcase_add_test(tests, arabic_2_is_converted_to_II);
     tcase_add_test(tests, arabic_3_is_converted_to_III);
     tcase_add_test(tests, arabic_4_is_converted_to_IV);
+    tcase_add_test(tests, arabic_5_is_converted_to_V);
+    tcase_add_test(tests, arabic_10_is_converted_to_X);
+    tcase_add_test(tests, arabic_25_is_converted_to_XXV);
 
     return tests;
 }
