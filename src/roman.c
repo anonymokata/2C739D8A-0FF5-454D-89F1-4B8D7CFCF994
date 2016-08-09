@@ -29,16 +29,32 @@ static bool starts_with(char* string, char* prefix) {
 }
 
 static const RomanToInt* find_next_mapping(char* roman_string) {
-    int num_value_elements = sizeof(ROMAN_NUMERAL_VALUES) / sizeof(ROMAN_NUMERAL_VALUES[0]);
-
-    for (int i = 0; i < num_value_elements; i++) {
-        char* roman_value = ROMAN_NUMERAL_VALUES[i].roman_value;
-        if (starts_with(roman_string, roman_value)) {
-            return &ROMAN_NUMERAL_VALUES[i];
-        }
+    const RomanToInt* mapping = &ROMAN_NUMERAL_VALUES[0];
+    while (!starts_with(roman_string, mapping->roman_value)) {
+        mapping++;
     }
-    return NULL;
+    return mapping;
 }
+
+static void push_string(char* buffer, char* to_append) {
+    int buffer_length = strlen(buffer);
+    int suffix_length = strlen(to_append);
+
+    for (int i = 0; i < suffix_length; i++) {
+        buffer[buffer_length + i] = to_append[i];
+    }
+
+    buffer[buffer_length + suffix_length] = '\0';
+}
+
+static const RomanToInt* find_largest_mapping_by_int(int arabic) {
+    const RomanToInt* mapping = &ROMAN_NUMERAL_VALUES[0];
+    while (mapping->int_value > arabic) {
+        mapping++;
+    }
+    return mapping;
+}
+
 
 char* roman_get_output(char* argv[]) {
     int left = roman_to_int(argv[0]);
@@ -58,65 +74,14 @@ int roman_to_int(char* roman_input) {
     return arabic_value;
 }
 
-static void push_string(char* buffer, char* to_append) {
-    int buffer_length = strlen(buffer);
-    int suffix_length = strlen(to_append);
-
-    for (int i = 0; i < suffix_length; i++) {
-        buffer[buffer_length + i] = to_append[i];
-    }
-
-    buffer[buffer_length + suffix_length] = '\0';
-}
-
 char* roman_from_int(int arabic) {
     char* buffer = malloc(sizeof(char) * ROMAN_MAX_LENGTH);
 
-    if (arabic >= 500) {
-        arabic -= 500;
-        push_string(buffer, "D");
+    while (arabic > 0) {
+        const RomanToInt* mapping = find_largest_mapping_by_int(arabic);
+        arabic -= mapping->int_value;
+        push_string(buffer, mapping->roman_value);
     }
-
-    if (arabic >= 400) {
-        arabic -= 400;
-        push_string(buffer, "CD");
-    }
-
-    while (arabic >= 100) {
-        arabic -= 100;
-        push_string(buffer, "C");
-    }
-
-    if (arabic >= 90) {
-        arabic -= 90;
-        push_string(buffer, "XC");
-    }
-
-    if (arabic >= 50) {
-        arabic -= 50;
-        push_string(buffer, "L");
-    }
-
-    while (arabic >= 10) {
-        arabic -= 10;
-        push_string(buffer, "X");
-    }
-
-    if (arabic >= 5) {
-        arabic -= 5;
-        push_string(buffer, "V");
-    }
-
-    if (arabic >= 4) {
-        arabic -= 4;
-        push_string(buffer, "IV");
-    }
-
-    while (arabic >= 1) {
-        arabic--;
-        push_string(buffer, "I");
-    }
-
     return buffer;
 }
 
