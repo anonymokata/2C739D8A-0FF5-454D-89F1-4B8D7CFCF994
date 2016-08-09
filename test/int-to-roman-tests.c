@@ -51,6 +51,14 @@ START_TEST(arabic_25_is_converted_to_XXV) {
 }
 END_TEST
 
+START_TEST(arabic_44_is_converted_to_XLIV) {
+    char* result = roman_from_int(44);
+    ck_assert_str_eq("XLIV", result);
+    free(result);
+}
+END_TEST
+
+
 START_TEST(arabic_50_is_converted_to_L) {
     char* result = roman_from_int(50);
     ck_assert_str_eq("L", result);
@@ -93,9 +101,9 @@ START_TEST(arabic_400_is_converted_to_CD) {
 }
 END_TEST
 
-START_TEST(arabic_404_is_converted_to_CDIV) {
-    char* result = roman_from_int(404);
-    ck_assert_str_eq("CDIV", result);
+START_TEST(arabic_444_is_converted_to_CDXLIV) {
+    char* result = roman_from_int(444);
+    ck_assert_str_eq("CDXLIV", result);
     free(result);
 }
 END_TEST
@@ -128,6 +136,13 @@ START_TEST(arabic_1000_is_converted_to_M) {
 }
 END_TEST
 
+START_TEST(arabic_3555_is_converted_to_MMMDLV) {
+    char* result = roman_from_int(3555);
+    ck_assert_str_eq("MMMDLV", result);
+    free(result);
+}
+END_TEST
+
 START_TEST(arabic_3999_is_converted_to_MMMCMXCIX) {
     char* result = roman_from_int(3999);
     ck_assert_str_eq("MMMCMXCIX", result);
@@ -145,17 +160,19 @@ TCase* create_int_to_roman_tests() {
     tcase_add_test(tests, arabic_5_is_converted_to_V);
     tcase_add_test(tests, arabic_10_is_converted_to_X);
     tcase_add_test(tests, arabic_25_is_converted_to_XXV);
+    tcase_add_test(tests, arabic_44_is_converted_to_XLIV);
     tcase_add_test(tests, arabic_50_is_converted_to_L);
     tcase_add_test(tests, arabic_66_is_converted_to_LXVI);
     tcase_add_test(tests, arabic_90_is_converted_to_XC);
     tcase_add_test(tests, arabic_100_is_converted_to_C);
     tcase_add_test(tests, arabic_291_is_converted_to_CCXCI);
     tcase_add_test(tests, arabic_400_is_converted_to_CD);
-    tcase_add_test(tests, arabic_404_is_converted_to_CDIV);
+    tcase_add_test(tests, arabic_444_is_converted_to_CDXLIV);
     tcase_add_test(tests, arabic_500_is_converted_to_D);
     tcase_add_test(tests, arabic_555_is_converted_to_DLV);
     tcase_add_test(tests, arabic_900_is_converted_to_CM);
     tcase_add_test(tests, arabic_1000_is_converted_to_M);
+    tcase_add_test(tests, arabic_3555_is_converted_to_MMMDLV);
     tcase_add_test(tests, arabic_3999_is_converted_to_MMMCMXCIX);
 
     return tests;
