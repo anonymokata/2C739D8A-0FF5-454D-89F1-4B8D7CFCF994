@@ -58,11 +58,30 @@ int roman_to_int(char* roman_input) {
     return arabic_value;
 }
 
+static void push_string(char* buffer, char* to_append) {
+    int buffer_length = strlen(buffer);
+    int suffix_length = strlen(to_append);
+
+    for (int i = 0; i < suffix_length; i++) {
+        buffer[buffer_length + i] = to_append[i];
+    }
+
+    buffer[buffer_length + suffix_length] = '\0';
+}
+
 char* roman_from_int(int arabic) {
     char* buffer = malloc(sizeof(char) * ROMAN_MAX_LENGTH);
 
-    for (int i = 0; i < arabic; i++) {
-        buffer[i] = 'I';
+    int buffer_position = 0;
+
+    if (arabic >= 4) {
+        arabic -= 4;
+        push_string(buffer, "IV");
+    }
+
+    while (arabic >= 1) {
+        arabic--;
+        push_string(buffer, "I");
     }
 
     return buffer;

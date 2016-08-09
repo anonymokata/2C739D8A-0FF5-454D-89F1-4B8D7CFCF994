@@ -16,10 +16,16 @@ START_TEST(arabic_2_is_converted_to_II) {
 }
 END_TEST
 
-
 START_TEST(arabic_3_is_converted_to_III) {
-    char* result = roman_from_int(2);
-    ck_assert_str_eq("II", result);
+    char* result = roman_from_int(3);
+    ck_assert_str_eq("III", result);
+    free(result);
+}
+END_TEST
+
+START_TEST(arabic_4_is_converted_to_IV) {
+    char* result = roman_from_int(4);
+    ck_assert_str_eq("IV", result);
     free(result);
 }
 END_TEST
@@ -30,6 +36,7 @@ TCase* create_int_to_roman_tests() {
     tcase_add_test(tests, arabic_1_is_converted_to_I);
     tcase_add_test(tests, arabic_2_is_converted_to_II);
     tcase_add_test(tests, arabic_3_is_converted_to_III);
+    tcase_add_test(tests, arabic_4_is_converted_to_IV);
 
     return tests;
 }
