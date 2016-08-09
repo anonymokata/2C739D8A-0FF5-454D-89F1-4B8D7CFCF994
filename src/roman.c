@@ -10,7 +10,9 @@ typedef struct {
 
 static const RomanToInt ROMAN_NUMERAL_VALUES[] = {
     {1000, "M"},
+    {900, "CM"},
     {500, "D"},
+    {400, "CD"},
     {100, "C"},
     {90, "XC"},
     {50, "L"},

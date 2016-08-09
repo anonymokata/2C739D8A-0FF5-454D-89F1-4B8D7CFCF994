@@ -62,6 +62,21 @@ START_TEST(XC_is_converted_to_90) {
 }
 END_TEST
 
+START_TEST(CD_is_converted_to_400) {
+    ck_assert_int_eq(400, roman_to_int("CD"));
+}
+END_TEST
+
+START_TEST(CM_is_converted_to_900) {
+    ck_assert_int_eq(900, roman_to_int("CM"));
+}
+END_TEST
+
+START_TEST(MMMCMXCIX_is_converted_to_3999) {
+    ck_assert_int_eq(3999, roman_to_int("MMMCMXCIX"));
+}
+END_TEST
+
 
 TCase* create_roman_to_int_tests() {
     TCase* tests = tcase_create("Roman-To-Int-Tests");
@@ -77,6 +92,9 @@ TCase* create_roman_to_int_tests() {
     tcase_add_test(tests, IV_is_converted_to_4);
     tcase_add_test(tests, IX_is_converted_to_9);
     tcase_add_test(tests, XC_is_converted_to_90);
+    tcase_add_test(tests, CD_is_converted_to_400);
+    tcase_add_test(tests, CM_is_converted_to_900);
+    tcase_add_test(tests, MMMCMXCIX_is_converted_to_3999);
 
     return tests;
 }
