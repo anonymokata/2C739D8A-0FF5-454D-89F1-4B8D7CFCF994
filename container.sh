@@ -1,6 +1,12 @@
 #!/bin/bash
 
+IMAGE_NAME='roman-calculator'
 WD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+
+if [ -z "$(docker images -q "$IMAGE_NAME")" ]; then
+    echo "Docker image ${IMAGE_NAME} does not exist. Building..."
+    $WD/rebuild-container.sh 
+fi
 
 if [[ "$1" == "/bin/bash" ]]; then
 

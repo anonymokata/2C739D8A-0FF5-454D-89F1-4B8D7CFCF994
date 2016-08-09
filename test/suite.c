@@ -29,6 +29,14 @@ START_TEST(MMMDLV_plus_CDXLIV_returns_MMMCMXCIX) {
 }
 END_TEST
 
+START_TEST(MMMDLV_minus_CDXLIV_returns_MMMCXI) {
+    char* input[] = {"MMMDLV", "-", "CDXLIV"};
+    char* result = roman_get_output(input);
+    ck_assert_str_eq("MMMCXI", result);
+    free(result);
+}
+END_TEST
+
 Suite* roman_calculator_suite() {
     Suite* test_suite = suite_create("Roman-Numberal-Calculator");
 
@@ -36,6 +44,7 @@ Suite* roman_calculator_suite() {
     tcase_add_test(calculator_test_case, I_plus_I_returns_II);
     tcase_add_test(calculator_test_case, II_plus_I_returns_III);
     tcase_add_test(calculator_test_case, MMMDLV_plus_CDXLIV_returns_MMMCMXCIX);
+    tcase_add_test(calculator_test_case, MMMDLV_minus_CDXLIV_returns_MMMCXI);
 
     suite_add_tcase(test_suite, calculator_test_case);
 

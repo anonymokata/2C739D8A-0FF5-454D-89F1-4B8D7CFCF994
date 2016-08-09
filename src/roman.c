@@ -60,7 +60,12 @@ static const RomanToInt* find_largest_mapping_by_int(int arabic) {
 char* roman_get_output(char* argv[]) {
     int left = roman_to_int(argv[0]);
     int right = roman_to_int(argv[2]);
-    return roman_from_int(left + right);
+
+    if (*argv[1] == '+') {
+        return roman_from_int(left + right);
+    } else {
+        return roman_from_int(left - right);
+    }
 }
 
 int roman_to_int(char* roman_input) {
